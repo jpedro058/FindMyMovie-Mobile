@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
+  Dimensions,
 } from "react-native";
 import {
   Bars3CenterLeftIcon,
@@ -18,11 +19,13 @@ import {
   fetchTrendingMovies,
   fetchUpcomingMovies,
 } from "../API/apiConf";
+import { Menu } from "../components/Menu";
 
 export default function HomeScreen() {
   const [trending, setTrending] = useState([]);
   const [upComing, setUpComing] = useState([]);
   const [topRated, setTopRated] = useState([]);
+  const [menu, setMenu] = useState(false);
 
   useEffect(() => {
     getTrending();
@@ -51,12 +54,14 @@ export default function HomeScreen() {
     <View className="flex-1 bg-neutral-900">
       <SafeAreaView>
         <View className="h-12 w-full px-2  flex flex-row items-center justify-between">
-          <Bars3CenterLeftIcon
-            size={40}
-            color="#ffffff"
-            strokeWidth={2}
-            className="flex-1"
-          />
+          <TouchableOpacity onPress={() => setMenu(!menu)}>
+            <Bars3CenterLeftIcon
+              size={40}
+              color="#ffffff"
+              strokeWidth={2}
+              className="flex-1"
+            />
+          </TouchableOpacity>
           <Text className="text-yellow-600 text-3xl font-bold">
             M<Text className="text-slate-200">ovies</Text>
           </Text>
@@ -71,6 +76,9 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
       </SafeAreaView>
+
+      {/* toggle menu */}
+      <Menu menu={menu} setMenu={setMenu} />
 
       <ScrollView
         showsVerticalScrollIndicator={false}
